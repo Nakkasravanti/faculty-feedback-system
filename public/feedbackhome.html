@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passkey Entry</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 6rem;
+            border-radius: 1.6rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: center;
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .login-container h2 {
+            font-size: 1.8rem;
+            margin: 0 0 1.5rem;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+            margin-bottom: 3.5rem;
+            font-family: 'Oswald';
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .login-container input[type="text"] {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.8rem;
+        }
+        
+        .login-container input[type="text"]:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .login-container input[type="submit"] {
+            width: 70%;
+            padding: 1rem;
+            margin: 1rem auto 0;
+            background: linear-gradient(135deg, #4481fa, #6a11cb);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .login-container input[type="submit"]:hover {
+            opacity: 0.9;
+        }
+        
+        #errorMessage {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            height: 20px;
+        }
+        * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+    background-size: 400% 400%;
+    animation: gradientBg 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradientBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    padding: 2.5rem 6rem;
+    border-radius: 1.6rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.login-container:hover {
+    transform: scale(1.01);
+}
+
+.login-container h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container input[type="text"] {
+    width: 100%;
+    padding: 1rem 1.2rem; /* Increased padding */
+    font-size: 1.2rem;       /* Increased font size */
+    border: none;
+    border-radius: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+
+.login-container input[type="text"]:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
+}
+
+.login-container input[type="submit"] {
+    width: 70%;
+    padding: 1rem;
+    margin: 1rem auto 0;
+    background: linear-gradient(135deg, #4481fa, #6a11cb);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.8rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-container input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+    opacity: 0.95;
+}
+
+#errorMessage {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    height: 20px;
+    transition: all 0.3s ease;
+}
+.login-container input[type="text"] {
+    width: 120%; /* increases field width beyond container padding */
+    max-width: 500px;
+    margin-left: -10%; /* center align adjustment */
+}
+.login-container {
+    /* Old: padding: 2.5rem 6rem; */
+    padding: 2.5rem 8rem; /* wider container */
+    max-width: 600px; /* optional cap on width for larger screens */
+    width: 90%; /* responsive width */
+}
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Enter Passkey</h2>
+        <form id="validatePasskey">
+            <input type="text" id="passkey" name="passkey" placeholder="Enter Your passkey" required>
+            <input type="submit" value="Submit">
+        </form>
+        <p id="errorMessage"></p>
+    </div>
+    <script>
+        document.getElementById('validatePasskey').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    
+    // Get the passkey and trim whitespace
+    const passkey = document.getElementById('passkey').value;
+    const errorMsg = document.getElementById('errorMessage');
+    
+    // Validate input
+    if (!passkey) {
+        errorMsg.textContent = 'Please enter a passkey';
+        errorMsg.style.animation = 'shake 0.5s ease';
+        return;
+    }
+    
+    try {
+        // Show loading state
+        const submitButton = this.querySelector('input[type="submit"]');
+        const originalButtonText = submitButton.value;
+        submitButton.value = 'Processing...';
+        submitButton.disabled = true;
+        
+        const response = await fetch('/validate/passkey', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ passkey }),
+            credentials: 'include' // Important for cookies
+        });
+        
+        // Parse response data
+        let data;
+        try {
+            data = await response.json();
+        } catch (parseError) {
+            throw new Error('Invalid response from server');
+        }
+        
+        // Reset button state
+        submitButton.value = originalButtonText;
+        submitButton.disabled = false;
+        
+        if (response.ok) {
+            // Success case
+            if (data.facultyData && data.facultyData.length > 0) {
+                // Store faculty data in localStorage for the feedback form
+                localStorage.setItem('facultyData', JSON.stringify(data.facultyData));
+                localStorage.setItem('section', data.section);
+                localStorage.setItem('Feedback_id',passkey)
+                
+                // Show success message before redirecting
+                errorMsg.textContent = 'Passkey validated successfully! Redirecting...';
+                errorMsg.style.color = '#2ecc71';
+                
+                // Redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = '/feedbackform';
+                }, 1000);
+            } else {
+                // No faculty data found
+                errorMsg.textContent = 'No faculty data found for this passkey';
+                errorMsg.style.animation = 'shake 0.5s ease';
+            }
+        } else {
+            // Error handling based on status codes
+            switch (response.status) {
+                case 400:
+                    errorMsg.textContent = data.message || 'Invalid passkey format';
+                    break;
+                case 404:
+                    errorMsg.textContent = 'Invalid passkey';
+                    break;
+                case 500:
+                    errorMsg.textContent = 'Server error, please try again later';
+                    break;
+                default:
+                    errorMsg.textContent = data.message || 'An error occurred, please try again';
+            }
+            
+            errorMsg.style.animation = 'shake 0.5s ease';
+            // Reset animation to allow it to trigger again on subsequent errors
+            setTimeout(() => errorMsg.style.animation = '', 500);
+        }
+    } catch (err) {
+        console.error('Error occurred:', err);
+        errorMsg.textContent = 'Connection error, please check your internet connection';
+        errorMsg.style.animation = 'shake 0.5s ease';
+        
+        // Reset button if there was an error
+        const submitButton = this.querySelector('input[type="submit"]');
+        submitButton.value = 'Enter';
+        submitButton.disabled = false;
+    }
+});
+
+// Define shake animation if not already defined
+if (!document.querySelector('style#animation-styles')) {
+    const styleElement = document.createElement('style');
+    styleElement.id = 'animation-styles';
+    styleElement.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    `;
+    document.head.appendChild(styleElement);
+}
+    </script>
+</body>
+</html>

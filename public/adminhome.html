@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Feedback Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+            background-size: 400% 400%;
+            animation: gradientBg 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            padding: 3rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 34rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+        }
+        
+        .container h1 {
+            font-size: 2.4rem;
+            margin-top: 1rem;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2.5rem;
+            gap: 1.5rem;
+        }
+        
+        .primary-button {
+            flex: 1;
+            padding: 1.1rem;
+            margin: 0;
+            background: linear-gradient(135deg, #4481fa, #6a11cb);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(106, 17, 203, 0.5);
+        }
+        
+        .primary-button:active {
+            transform: translateY(1px);
+        }
+        
+        .feedback-section {
+            margin: 2rem 0;
+            font-size: 1.1rem;
+            color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feedback-section:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.02);
+        }
+        
+        .feedback-section h3 {
+            margin-bottom: 0.8rem;
+            color: #4e4e4e;
+            font-size: 1.3rem;
+        }
+        
+        .feedback-section p {
+            line-height: 1.6;
+        }
+        
+        .user-info {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: rgba(0, 0, 0, 0.7);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+        
+        .user-info i {
+            color: #4481fa;
+        }
+        
+        .logout-container {
+            margin-top: 2.5rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #ff5e62, #ff9966);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(255, 94, 98, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(255, 94, 98, 0.4);
+        }
+        
+        .logout-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0.2), rgba(0,0,0,0));
+            margin: 1.5rem 0;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                width: 90%;
+                padding: 2rem 1.5rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .primary-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div id="userInfo" class="user-info">
+            <i class="fas fa-user-circle"></i>
+            Logged in as: <span id="username"></span>
+        </div>
+        
+        <h1>Welcome to Our Portal</h1>
+        
+        <div class="feedback-section">
+            <h3>Faculty Feedback</h3>
+            <p>We value your opinion and appreciate your feedback about the faculty. Please take a moment to provide your thoughts.</p>
+        </div>
+        
+        <div id="errorMessage" style="color: #ff3333; margin: 1rem 0; font-weight: bold; display: none;"></div>
+        
+        <div class="button-group">
+            <button class="primary-button" >
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+            <button class="primary-button" >
+                <i class="fas fa-comment-alt"></i> Feedback
+            </button>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="logout-container">
+            <button id="logoutBtn" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerButton = document.querySelector('.button-group button:first-child');
+            const feedbackButton = document.querySelector('.button-group button:last-child');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const userInfo = document.getElementById('userInfo');
+            
+            // Check login status when page loads
+            checkLoginStatus();
+            
+            // Function to check if user is logged in
+            async function checkLoginStatus() {
+                try {
+                    const response = await fetch('/check/login', {
+                        method: 'GET',
+                        credentials: 'include'
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.loggedIn) {
+                            // User is logged in
+                            userInfo.style.display = 'flex';
+                            logoutBtn.style.display = 'flex';
+                            
+                            // Update username if available
+                            if (data.user.username) {
+                                document.getElementById('username').textContent = data.user.username;
+                            }
+                        } else {
+                            // User is not logged in
+                            userInfo.style.display = 'none';
+                            logoutBtn.style.display = 'none';
+                        }
+                    }
+                } catch (err) {
+                    console.error('Error checking login status:', err);
+                }
+            }
+            
+            registerButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                try {
+                    const response = await fetch('/check/login', {
+                        method: 'GET',
+                        credentials: 'include'
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.loggedIn) {
+                            // Already logged in
+                            setTimeout(() => {
+                                window.location.href = '/register';
+                            }, 500);
+                        } else {
+                            // Not logged in, redirect to register
+                            showError('Something Went Wrong..')
+                        }
+                    } else {
+                        // Server returned an error
+                        showError('Server error. Please try again later.');
+                    }
+                } catch (err) {
+                    console.error('Error checking login status:', err);
+                    showError('Connection error. Redirecting to registration...');
+                    setTimeout(() => {
+                        window.location.href = '/admin';
+                    }, 1500);
+                }
+            });
+            
+            feedbackButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                try {
+                    const response = await fetch('/check/login', {
+                        method: 'GET',
+                        credentials: 'include'
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        if (data.loggedIn) {
+                            // Logged in, go to feedback
+                            setTimeout(() => {
+                                window.location.href = '/admin/schedule';
+                            }, 500);
+                        } else {
+                            // Not logged in
+                            showError('Please log in to provide feedback.');
+                            setTimeout(() => {
+                                window.location.href = '/admin';
+                            }, 1500);
+                        }
+                    } else {
+                        showError('Server error. Please try again later.');
+                    }
+                } catch (err) {
+                    console.error('Error checking login status:', err);
+                    showError('Connection error. Redirecting to registration...');
+                    setTimeout(() => {
+                        window.location.href = '/register';
+                    }, 1500);
+                }
+            });
+            
+            // Add event listener for logout button
+            logoutBtn.addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/logout', {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        showSuccess('Logout successful! Redirecting...');
+                        
+                        // Hide user info and logout button
+                        userInfo.style.display = 'none';
+                        logoutBtn.style.display = 'none';
+                        
+                        // Redirect to home page after logout
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 1500);
+                    } else {
+                        showError('Logout failed. Please try again.');
+                    }
+                } catch (err) {
+                    console.error('Error during logout:', err);
+                    showError('Connection error during logout.');
+                }
+            });
+            
+            // Helper function to show error messages
+            function showError(message) {
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.textContent = message;
+                errorMsg.style.display = 'block';
+                errorMsg.style.color = '#ff3333';
+                
+                // Add shake animation
+                errorMsg.style.animation = 'none';
+                setTimeout(() => {
+                    errorMsg.style.animation = 'shake 0.7s ease';
+                }, 10);
+            }
+            
+            // Helper function to show success messages
+            function showSuccess(message) {
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.textContent = message;
+                errorMsg.style.display = 'block';
+                errorMsg.style.color = '#33cc66'; // Green color for success
+            }
+        });
+    </script>
+</body>
+</html>

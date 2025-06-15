@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Registration</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height:100%;
+            background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .registration-container {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 6.4rem;
+            border-radius: 1.6rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            height: auto;
+            margin: 1rem;
+        }
+        
+        .registration-container h1 {
+            font-size: 2.2rem;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+            font-family:'Oswald';
+            margin-top: 2rem;
+            margin-bottom: 4.5rem;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .registration-container input {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .registration-container input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .registration-container button {
+            width: 60%;
+            padding: 1rem;
+            margin: 2rem auto 1rem;
+            background: linear-gradient(135deg, #4481fa, #6a11cb);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.8rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .registration-container button:hover {
+            opacity: 0.9;
+        }
+        
+        #errorMessage {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            height: 20px;
+        }
+        
+        
+        .success-message {
+            color: #000000d6;
+            margin: 2rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 480px) {
+            .registration-container {
+                width: 90%;
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <h1>Faculty Registration</h1>
+        <form id="facultyRegisterForm">
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="section">Section:</label>
+                <input type="text" id="section" name="section" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            
+            <button type="submit">Register</button>
+        </form>
+        <p id="errorMessage"></p>
+    </div>
+    
+    <script>
+        document.getElementById('facultyRegisterForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const section = document.getElementById('section').value;
+            const subject = document.getElementById('subject').value;
+            
+            try {
+                const response = await fetch('/faculty/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password, section, subject }),
+                });
+                
+                const data = await response.json();
+                
+                if(response.status === 401) {
+                    setInterval(() => {
+                        window.location.href = '/admin';
+                    }, 1000);
+                    return;
+                }
+
+                if (response.status === 201) {
+                    // Replace alert with in-page success message
+                    const formContainer = document.querySelector('.registration-container');
+                    formContainer.innerHTML = `
+                        <h1>Registration Complete</h1>
+                        <div class="success-message">
+                            Faculty registered successfully!
+                        </div>
+                        <button onclick="location.reload()">Register Another</button>
+                    `;
+                } else {
+                    document.getElementById('errorMessage').textContent = data;
+                }
+            } catch (err) {
+                console.error('Registration failed', err);
+                document.getElementById('errorMessage').textContent = 'Server error, please try again later.';
+            }
+        });
+    </script>
+</body>
+</html>

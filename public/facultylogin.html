@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Faculty Feedback System</title>
+<style>
+  /* Global Styles */
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+    background-size: 400% 400%;
+    animation: gradientBg 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+@keyframes gradientBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Login Container */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 1.6rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 500px;
+    width: 90%;
+}
+
+/* Login Form */
+.login-form {
+    padding: 1rem;
+}
+
+.login-form h2 {
+    font-size: 2rem;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+/* Form Groups */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.4);
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.form-group input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Buttons */
+.form-actions {
+    margin-top: 2rem;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4481fa, #6a11cb);
+    color: white;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* Alert Messages */
+.alert {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 0.8rem;
+    font-weight: 500;
+}
+
+#faculty-error-alert {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #c0392b;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+#faculty-success-alert {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: #27ae60;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.5rem;
+    }
+}
+</style>
+</head>
+
+<body>
+  <!-- Login Form Container -->
+  <div class="login-container">
+    <!-- Faculty Login Form -->
+    <div class="login-form" id="faculty-login">
+      <h2>Faculty Login</h2>
+      
+      <div class="form-group">
+        <label for="faculty-username">Username</label>
+        <input type="text" id="faculty-username" placeholder="Enter your username" />
+      </div>
+
+      <div class="form-group">
+        <label for="faculty-password">Password</label>
+        <input type="password" id="faculty-password" placeholder="Enter your password" />
+      </div>
+
+      <div class="form-group">
+        <label for="faculty-section">Section</label>
+        <input type="text" id="faculty-section" placeholder="Enter your section" />
+      </div>
+
+      <div class="form-group">
+        <label for="faculty-subject">Subject</label>
+        <input type="text" id="faculty-subject" placeholder="Enter your subject" />
+      </div>
+
+      <!-- Alert Message for Feedback -->
+      <div class="alert" id="faculty-error-alert" style="display:none;"></div>
+      <div class="alert" id="faculty-success-alert" style="display:none;"></div>
+
+      <!-- Login Button -->
+      <div class="form-actions">
+        <button class="btn btn-primary" id="faculty-login-btn">Log In</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+    document.getElementById('faculty-login-btn')?.addEventListener('click', async () => {
+  const username = document.getElementById('faculty-username').value;
+  const password = document.getElementById('faculty-password').value;
+  const section = document.getElementById('faculty-section').value;
+  const subject = document.getElementById('faculty-subject').value;
+
+  if (!username || !password || !section || !subject) {
+    showAlert('error', 'faculty-error-alert', 'Please fill in all fields');
+    return;
+  }
+
+  try {
+    const response = await fetch('/faculty/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, section, subject }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem('facultyUsername', username);
+      localStorage.setItem('facultySection', section);
+      localStorage.setItem('facultyToken', data.token);
+      localStorage.setItem('facultyId', data.faculty.id);
+      showAlert('success', 'faculty-success-alert', 'Login successful! Redirecting...');
+      setTimeout(() => {
+        window.location.href = '/facultydashboard.html';
+      }, 2000);
+    } else {
+      showAlert('error', 'faculty-error-alert', data.message || 'Login failed');
+    }
+  } catch (error) {
+    showAlert('error', 'faculty-error-alert', 'Server error. Please try again later.');
+  }
+});
+
+function showAlert(type, elementId, message) {
+  const alertElement = document.getElementById(elementId);
+  alertElement.textContent = message;
+  alertElement.style.display = 'block';
+
+  // Auto-hide after 5 seconds
+  setTimeout(() => {
+    alertElement.style.display = 'none';
+  }, 5000);
+}
+
+</script>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+            background-size: 400% 400%;
+            animation: gradientBg 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @keyframes gradientBg {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem ;
+            border-radius: 1.6rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 32rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .login-container h1 {
+            font-size: 2.2rem;
+            margin-top: 2rem;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-family:'Oswald';
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-container input {
+            width: 80%;
+            padding: 1rem 1.2rem;
+            margin: 0.8rem 0;
+            border: none;
+            border-radius: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            color: rgba(0, 0, 0, 0.8);
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .login-container input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-container input::placeholder {
+            color: rgba(0, 0, 0, 0.45);
+            font-weight: 400;
+        }
+        .login-container .input-group:first-child{
+            margin-top: 3.8rem;
+        }
+        
+        .login-container button {
+            width: 40%;
+            padding: 1rem;
+            margin: 0;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #4481fa, #6a11cb);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .login-container button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+        }
+        
+        .login-container button:active {
+            transform: translateY(1px);
+        }
+        
+        #errorMessage {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            height: 20px;
+        }
+        
+        .form-footer {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.6);
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                width: 90%;
+                padding: 2rem 1.5rem;
+            }
+        }
+        * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #98ecf7, #a5cdf3, #d4e7f8, #dccff9, #fbc7f8);
+    background-size: 400% 400%;
+    animation: gradientBg 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes gradientBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 1.6rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 32rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container:hover {
+    transform: translateY(-5px);
+}
+
+.login-container h1 {
+    font-size: 2.2rem;
+    margin-top: 2rem;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.login-container input {
+    width: 80%;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    border: none;
+    border-radius: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.4);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.login-container input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 0 5px #6a11cb;
+    transform: scale(1.02);
+}
+
+.login-container input::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+    font-weight: 400;
+}
+
+.login-container .input-group:first-child {
+    margin-top: 3.8rem;
+}
+
+.login-container button {
+    width: 40%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #4481fa, #6a11cb);
+    background-size: 200% 200%;
+    animation: btnAnim 5s ease infinite;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+}
+
+@keyframes btnAnim {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.login-container button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+}
+
+.login-container button:active {
+    transform: translateY(1px);
+}
+
+#errorMessage {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    height: 20px;
+}
+
+.form-footer {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 2rem 1.5rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Admin Login</h1>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="Enter Your Username" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Enter Your Password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p id="errorMessage"></p>
+        <div class="form-footer">
+            Secure Admin Portal
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch('/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.status === 200) {
+                    localStorage.setItem('token', data.token); // Store token for later use
+                    setInterval(() => {
+                        window.location.href = '/adminhome';
+                    }, 1000); // Redirect to dashboard
+                } else {
+                    const errorMsg = document.getElementById('errorMessage');
+                    errorMsg.textContent = data.message;
+                    errorMsg.style.animation = 'shake 0.7s ease';
+                }
+            } catch (err) {
+                console.error('Login failed', err);
+                document.getElementById('errorMessage').textContent = 'Server error, please try again later.';
+            }
+        });
+        document.styleSheets[0].insertRule(`
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `, document.styleSheets[0].cssRules.length);
+    </script>
+</body>
+</html>

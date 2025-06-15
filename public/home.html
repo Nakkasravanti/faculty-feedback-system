@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Feedback System</title>
+  <style>
+    /* Add your CSS here (same as provided) */
+  </style>
+</head>
+<style>
+  :root {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --secondary: #64748b;
+    --light: #f1f5f9;
+    --dark: #1e293b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --info: #06b6d4;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    background-color: #f8fafc;
+    color: var(--dark);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Header Styles */
+  header {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .logo svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-items {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-items a {
+    text-decoration: none;
+    color: var(--secondary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .nav-items a:hover {
+    color: var(--primary);
+  }
+
+  .btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+  }
+
+
+
+  
+
+  .auth-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .main {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+    height: 82vh;
+    width: 100vw;
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    z-index: 1;
+    position: relative;
+  }
+
+  .main h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .main p {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+
+  .main-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .main::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-image: url('/api/placeholder/800/600');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+  }
+  .footer {
+background-color: #333; /* Dark background color */
+color: white; /* White text */
+text-align: center; /* Center align text */
+padding: 20px 0; /* Padding top and bottom */
+font-family: Arial, sans-serif; /* Set font family */
+position: fixed; /* Fix position at the bottom of the page */
+left: 0;
+bottom: 0;
+width: 100%; /* Full width */
+}
+
+.footer p {
+margin: 0; /* Remove default margin */
+font-size: 14px; /* Set font size */
+}
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --secondary: #64748b;
+  --light: #f1f5f9;
+  --dark: #1e293b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #06b6d4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f8fafc;
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+header {
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  transition: box-shadow 0.3s ease;
+}
+
+header:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.nav-items {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-items a {
+  text-decoration: none;
+  color: var(--secondary);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-items a:hover {
+  color: var(--primary);
+}
+
+.btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  background-size: 150% 150%;
+  transition: transform 0.3s ease, background 0.4s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+}
+
+.auth-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Hero / Main Section */
+.main {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+  height: 82vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+}
+
+.main::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background-image: url('/api/placeholder/800/600');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  z-index: 0;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  position: relative;
+  z-index: 1;
+  animation: fadeInSlide 1.2s ease forwards;
+}
+
+.main h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.main p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
+
+.main-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #1e293b;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  font-family: Arial, sans-serif;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main h1 {
+    font-size: 2.25rem;
+  }
+
+  .main p {
+    font-size: 1rem;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .main-content {
+    padding-right: 2rem;
+  }
+
+  .main::after {
+    display: none;
+  }
+}
+
+ </style>
+<body>
+  <header>
+    <div class="container">
+      <nav class="navbar">
+        <div class="logo">
+          FacultyFeedback
+        </div>
+      </nav>
+    </div>
+  </header>
+  <section class="main">
+    <div class="container">
+      <div class="main-content">
+        <h1>Faculty Feedback System</h1>
+        <p>A comprehensive platform for managing, collecting, and analyzing feedback for educational institutions.</p>
+        <div class="main-actions">
+          <a href="#" class="btn btn-primary" id="getStartedBtn">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer">
+      <p>&copy; 2025 Faculty Feedback System.Batch-1.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('getStartedBtn').addEventListener('click', async (event) => {
+      event.preventDefault(); // Prevent default action initially
+      
+      try {
+        // Check login status with credentials to ensure cookies are sent
+        const response = await fetch('/check/login', {
+          credentials: 'include'
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        if (data.loggedIn) {
+          // User is logged in, redirect to admin home
+          window.location.href = '/adminhome';
+        } else {
+          // User is not logged in, redirect to login page
+          window.location.href = '/admin';
+        }
+      } catch (err) {
+        console.error('Error checking login status:', err);
+        // On error, default to redirecting to login page
+        window.location.href = '/admin';
+      }
+    });
+  </script>
+</body>
+
+</html>
